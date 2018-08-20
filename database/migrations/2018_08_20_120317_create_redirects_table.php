@@ -18,15 +18,11 @@ class CreateRedirectsTable extends Migration
             $table->integer('url_id');
             $table->foreign('url_id')->references('id')->on('urls');
 
-            $table->string('ip');
+            $table->string('country');
             $table->string('language');
 
             // info from User-Agent
             $table->string('browser');
-            $table->double('cssversion');
-            $table->boolean('javascript');
-            $table->boolean('vbscript');
-            $table->boolean('javaapplets');
             $table->timestamps();
         });
     }

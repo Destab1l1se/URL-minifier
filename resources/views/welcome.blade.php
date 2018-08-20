@@ -14,7 +14,6 @@
     <div class="container">
         <div class="page-header">
             <h1>URL minifier</h1>
-            <h3>Simple tool to minify URLs</h3>
         </div>
 
         <form action="{{ route('minify') }}" method="POST">
@@ -22,6 +21,13 @@
             <div class="form-group">
                 <label for="url">Your URL</label>
                 <input required type="url" class="form-control" id="url" name="url" placeholder="Enter url">
+            </div>
+            <div class="form-group">
+                <label for="custom_url">Custom url</label>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon3">https://example.com/users/</span>
+                </div>
+                <input type="url" class="form-control" id="custom_url" name="custom_url" value="{{ route('main') }}">
             </div>
             <div class="form-group">
                 <label for="expires_at">Url expiration time (optional)</label>

@@ -13,6 +13,7 @@
 
 Route::get('/', 'MainController@mainPage')->name('main');
 // todo: temp
+// todo: add readme and browscap requirement
 Route::post('minify', 'MainController@minify')->name('minify');
 Route::get('{id}', 'MainController@redirect');
 Route::get('/info/{id}','MainController@info');

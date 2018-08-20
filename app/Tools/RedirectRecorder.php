@@ -17,16 +17,13 @@ class RedirectRecorder
     {
         $redirect = new Redirect();
         $redirect['url_id'] = $url_id;
-        $redirect['ip'] = $request->ip();
 
-        $redirect['language'] = substr($request->server('HTTP_ACCEPT_LANGUAGE'),0,5);
-
-        $browser_info = get_browser($request->header('User-Agent'));
-        $redirect['browser'] = $browser_info->parent;
-        $redirect['javascript'] = $browser_info->javascript;
-        $redirect['vbscript'] = $browser_info->vbscript;
-        $redirect['javaapplets'] = $browser_info->javaapplets;
-        $redirect['cssversion'] = $browser_info->cssversion;
+        $lang_code = substr($request->server('HTTP_ACCEPT_LANGUAGE'),0,2);
+        $redirect['language'] = RedirectCreatorHelper::lang_code_to_lang_name($lang_code);
+        $redirect['browser'] = get_browser($request->header('User-Agent'))->parent;
+        if ($ip = $request->ip() != '127.0.0.1')
+            $redirect['country'] = RedirectCreatorHelper::ip_to_country($request->ip());
+        else $redirect['country'] = 'localhost';
 
         $redirect->save();
     }
