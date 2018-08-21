@@ -11,9 +11,8 @@
 |
 */
 
-Route::get('/', 'MainController@mainPage')->name('main');
-// todo: temp
+Route::view('/', 'main_page')->name('main');
 // todo: add readme and browscap requirement
 Route::post('minify', 'MainController@minify')->name('minify');
-Route::get('{id}', 'MainController@redirect');
-Route::get('/info/{id}','MainController@info');
+Route::get('{path}', 'MainController@redirect');
+Route::get('/info/{path}','MainController@info');

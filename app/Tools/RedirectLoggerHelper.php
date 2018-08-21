@@ -9,7 +9,7 @@
 namespace App\Tools;
 
 
-class RedirectCreatorHelper
+class RedirectLoggerHelper
 {
     const LANGUAGE_CODES_NAMES = array(
         'en' => 'English' ,

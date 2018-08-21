@@ -20,8 +20,6 @@ class CreateRedirectsTable extends Migration
 
             $table->string('country');
             $table->string('language');
-
-            // info from User-Agent
             $table->string('browser');
             $table->timestamps();
         });

@@ -11,18 +11,18 @@ namespace App\Tools;
 
 use App\Redirect;
 
-class RedirectRecorder
+class RedirectLogger
 {
-    public static function record($url_id, \Illuminate\Http\Request $request)
+    public static function log($url_id, \Illuminate\Http\Request $request)
     {
         $redirect = new Redirect();
         $redirect['url_id'] = $url_id;
 
         $lang_code = substr($request->server('HTTP_ACCEPT_LANGUAGE'),0,2);
-        $redirect['language'] = RedirectCreatorHelper::lang_code_to_lang_name($lang_code);
+        $redirect['language'] = RedirectLoggerHelper::lang_code_to_lang_name($lang_code);
         $redirect['browser'] = get_browser($request->header('User-Agent'))->parent;
         if ($ip = $request->ip() != '127.0.0.1')
-            $redirect['country'] = RedirectCreatorHelper::ip_to_country($request->ip());
+            $redirect['country'] = RedirectLoggerHelper::ip_to_country($request->ip());
         else $redirect['country'] = 'localhost';
 
         $redirect->save();

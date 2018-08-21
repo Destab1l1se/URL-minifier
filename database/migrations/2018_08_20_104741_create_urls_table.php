@@ -15,7 +15,8 @@ class CreateUrlsTable extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('custom_url')->nullable();
+            $table->string('redirects_to');
+            $table->string('path')->unique();
             $table->datetime('expires_at')->nullable();
             $table->timestamps();
         });

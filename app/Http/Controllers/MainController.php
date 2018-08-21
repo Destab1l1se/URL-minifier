@@ -2,43 +2,41 @@
 
 namespace App\Http\Controllers;
 
-use App\Tools\RedirectRecorder;
+use App\Tools\RedirectLogger;
+use App\Tools\UrlGenerator;
 use App\Url;
 use Illuminate\Http\Request;
 
 class MainController extends Controller
 {
-    public function mainPage()
-    {
-        return view('welcome');
-    }
-
     public function minify(Request $request)
     {
         $url = new Url;
-        $url['url'] = $request['url'];
+        $url['redirects_to'] = $request['redirects_to'];
+        // todo: make url validation
+        $url['path'] = $request['custom-url'] ?? UrlGenerator::generate();
         $url['expires_at'] = $request['expires_at'];
         $url->save();
 
         return [
-            'url' => url($url['id']),
-            'info' => url("/info/$url->id]")
+            'url' => url($url['path']),
+            'info' => url("/info/{$url['path']}")
         ];
     }
 
-    public function redirect($url_id)
+    public function redirect($path)
     {
         // todo: check whether redirect is expired
-        $url = Url::find($url_id);
+        $url = Url::where('path',$path)->first();
         // todo: rework existence check (add view)
         if (!$url)
             return 'No such url';
 
-        RedirectRecorder::record($url->id, request());
-        return redirect($url->url);
+        RedirectLogger::log($url->id, request());
+        return redirect($url['redirects_to']);
     }
 
-    public function info($url_id)
+    public function info($path)
     {
 
     }
