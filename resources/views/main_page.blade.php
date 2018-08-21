@@ -71,7 +71,7 @@
                     'custom-url': $('#custom-url').val(),
                     'expires_at': $('#expires_at').val()
                 },
-                success: function(data) {
+                success: function (data) {
                     showLinks(data);
                 },
                 error: function (request, error) {
@@ -85,15 +85,22 @@
         // deleting old ones
         $('.jumbotron').remove();
 
-        //todo: add errors, preloader and request validation
-        $('form').after(function() {
-            let info =
-            '<div class="jumbotron">' +
-                '<span>Your url: </span>' +
-                '<div class="alert alert-primary">' + data.url + '</div>' +
-                '<span>Url for statistics: </span>' +
-                '<div class="alert alert-success">' + data.info + '</div>' +
-            '</div>';
+        $('form').after(function () {
+            let info = '<div class="jumbotron">';
+
+            if (data.error !== undefined) {
+                info +=
+                    '<span>Error:</span>' +
+                    '<div class="alert alert-danger">' + data.error + '</div>';
+            }
+            else {
+                info +=
+                    '<span>Your url: </span>' +
+                    '<div class="alert alert-primary">' + data.url + '</div>' +
+                    '<span>Url for statistics: </span>' +
+                    '<div class="alert alert-success">' + data.info + '</div>';
+            }
+            info += '</div>';
 
             return info;
         });

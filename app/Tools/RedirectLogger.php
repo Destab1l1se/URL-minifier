@@ -13,6 +13,7 @@ use App\Redirect;
 
 class RedirectLogger
 {
+    // could be made with facade or DI
     public static function log($url_id, \Illuminate\Http\Request $request)
     {
         $redirect = new Redirect();
