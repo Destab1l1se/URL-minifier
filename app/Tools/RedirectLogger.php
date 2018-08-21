@@ -9,14 +9,14 @@
 namespace App\Tools;
 
 
-use App\Redirect;
+use App\RedirectFact;
 
 class RedirectLogger
 {
     // could be made with facade or DI
     public static function log($url_id, \Illuminate\Http\Request $request)
     {
-        $redirect = new Redirect();
+        $redirect = new RedirectFact;
         $redirect['url_id'] = $url_id;
 
         $lang_code = substr($request->server('HTTP_ACCEPT_LANGUAGE'),0,2);

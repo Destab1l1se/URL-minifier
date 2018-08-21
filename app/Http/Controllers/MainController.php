@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Redirect;
+use App\RedirectFact;
 use App\Tools\RedirectLogger;
 use App\Tools\UrlGenerator;
 use App\Tools\UrlValidator;
@@ -31,14 +31,12 @@ class MainController extends Controller
         $url['redirects_to'] = $request['redirects_to'];
 
         if ($request['custom-url']) {
-            // url validation
             $validator = Validator::make($request->only('custom-url'),
                 ['custom-url' => 'unique:urls,path']
             );
             if ($validator->fails())
                 return ['error' => 'Path already exists'];
 
-            // todo: maybe refactor
             if (strpos($request['custom-url'], '/') !== false || strpos($request['custom-url'], '\\') !== false)
                 return ['error' => 'Custom path can\'t contain slashes'];
 
@@ -87,19 +85,19 @@ class MainController extends Controller
     {
         $url_id = Url::where('path', $path)->first()['id'];
 
-        $json['countries'] = Redirect::selectRaw('country, count(country) as amount')
+        $json['countries'] = RedirectFact::selectRaw('country, count(country) as amount')
             ->where('url_id', $url_id)
             ->groupBy('country')->get();
 
-        $json['languages'] = Redirect::selectRaw('language, count(language) as amount')
+        $json['languages'] = RedirectFact::selectRaw('language, count(language) as amount')
             ->where('url_id', $url_id)
             ->groupBy('language')->get();
 
-        $json['browsers'] = Redirect::selectRaw('browser, count(browser) as amount')
+        $json['browsers'] = RedirectFact::selectRaw('browser, count(browser) as amount')
             ->where('url_id', $url_id)
             ->groupBy('browser')->get();
 
-        $json['total'] = Redirect::selectRaw('count(*) as total')
+        $json['total'] = RedirectFact::selectRaw('count(*) as total')
             ->where('url_id', $url_id)
             ->first()['total'];
 

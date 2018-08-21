@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRedirectsTable extends Migration
+class CreateRedirectFactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateRedirectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('redirects', function (Blueprint $table) {
+        Schema::create('redirect_facts', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('url_id');
             $table->foreign('url_id')->references('id')->on('urls');
@@ -32,6 +32,6 @@ class CreateRedirectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('redirects');
+        Schema::dropIfExists('redirect_facts');
     }
 }
